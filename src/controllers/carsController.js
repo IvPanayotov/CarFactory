@@ -15,24 +15,27 @@ class CarsController {
   async addCar(req, res) {
     try {
       const { model, brand, registrationNumber, price } = req.body;
+  
       if (!model || !brand || !registrationNumber || price === undefined) {
         return res.status(400).json({ error: "All fields are required" });
       }
 
-    // Validate model and brand: at least 2 letters, no special symbols
+    // Validate model
     const namePattern = /^[A-Za-z0-9\s]{2,}$/;
     if (!namePattern.test(model)) {
       return res.status(400).json({
         error: "Model must be at least 2 characters and cannot contain special symbols (! ? . , etc.)"
       });
     }
+
+    // Validate brand
     if (!namePattern.test(brand)) {
       return res.status(400).json({
         error: "Brand must be at least 2 characters and cannot contain special symbols (! ? . , etc.)"
       });
     }
 
-      // Registration number validation
+      // Validate registration number 
       const regPattern = /^[A-Za-z]{2}\d{4}[A-Za-z]{2}$/;
       if (!regPattern.test(registrationNumber)) {
         return res.status(400).json({
@@ -47,7 +50,6 @@ class CarsController {
     }
   }
 
-  
 async editCar(req, res) {
   try {
     const id = parseInt(req.params.id, 10);
